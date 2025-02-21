@@ -18,13 +18,15 @@
 @endif
 
 @if (Auth::check())
-    <div class="pt-15 w-4/5 m-auto">
-        <a 
-            href="/blog/create"
-            class="bg-blue-500 uppercase bg-transparent text-gray-100 text-xs font-extrabold py-3 px-5 rounded-3xl">
-            Create post
-        </a>
-    </div>
+<div class="w-4/5 m-auto mt-10 pl-2">
+    <a href="/blog/create"
+        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        Create New Post
+    </a>
+</div>
 @endif
 
 @foreach ($posts as $post)
@@ -42,7 +44,7 @@
             </span>
 
             <p class="text-xl text-gray-700 pt-8 pb-10 leading-8 font-light">
-                {{ $post->description }}
+                {{ \Str::limit($post->description, 450, '...') }}
             </p>
 
             <a href="/blog/{{ $post->slug }}" class="uppercase bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
@@ -50,29 +52,26 @@
             </a>
 
             @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
-                <span class="float-right">
+                <div class="flex justify-end space-x-4">
                     <a 
                         href="/blog/{{ $post->slug }}/edit"
-                        class="text-gray-700 italic hover:text-gray-900 pb-1 border-b-2">
+                        class="text-blue-500 hover:text-blue-700 font-semibold">
                         Edit
                     </a>
-                </span>
 
-                <span class="float-right">
-                     <form 
+                    <form 
                         action="/blog/{{ $post->slug }}"
                         method="POST">
                         @csrf
                         @method('delete')
 
                         <button
-                            class="text-red-500 pr-3"
+                            class="text-red-500 hover:text-red-700 font-semibold"
                             type="submit">
                             Delete
                         </button>
-
                     </form>
-                </span>
+                </div>
             @endif
         </div>
     </div>    
