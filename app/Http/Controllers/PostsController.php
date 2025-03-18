@@ -72,8 +72,12 @@ class PostsController extends Controller
      */
     public function show($slug)
     {
-        return view('blog.show')
-            ->with('post', Post::where('slug', $slug)->first());
+        $post = Post::where('slug', $slug)->firstOrFail();
+        $post->increment('views');
+        
+        return view('blog.show', [
+            'post' => $post
+        ]);
     }
 
     /**
@@ -127,6 +131,21 @@ class PostsController extends Controller
 
         return redirect('/blog')
             ->with('message', 'Your post has been deleted!');
+    }
+
+    /**
+     * Like the post.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function like($slug)
+    {
+        $post = Post::where('slug', $slug)->firstOrFail();
+        $post->increment('likes');
+        
+        return redirect()->back()
+            ->with('message', 'Post liked!');
     }
 }
 
