@@ -72,7 +72,10 @@ class PostsController extends Controller
      */
     public function show($slug)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
+        $post = Post::where('slug', $slug)
+        ->with(['user', 'likes'])
+        ->firstOrFail();
+        
         $post->increment('views');
         
         return view('blog.show', [
@@ -142,10 +145,32 @@ class PostsController extends Controller
     public function like($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
-        $post->increment('likes');
-        
-        return redirect()->back()
-            ->with('message', 'Post liked!');
+        $user = auth()->user();
+
+        // user must be signed in to like a post
+        if (!$user) {
+            return redirect()->back()->with('error', 'You must be logged in to like posts.');
+        }
+
+        // check if user has already liked the post
+        if ($post->likedBy($user))
+        {
+            // unlike the post
+            $post->likes()->where('user_id', $user->id)->delete();
+            $message = 'Post unliked';
+        } else {
+            // like the post
+            $post->likes()->create([
+                'user_id' => $user->id,
+            ]);
+            $message = 'Post liked!';
+        }
+
+        // update post's like count
+        $post->likes = $post->likes()->count();
+        $post->save();
+
+        return redirect()->back()->with('message', $message);
     }
 }
 

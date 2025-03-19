@@ -93,12 +93,21 @@
                 </div>
             </div>
         </div>
+        <div class="flex justify-center items-center bg-white overflow-hidden shadow rounded-lg p-5">
+            <a href="/blog/create"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Create New Post
+            </a>
+        </div>
     </div>
     
     <!-- Posts List -->
     <div class="bg-white shadow overflow-hidden sm:rounded-md mt-8">
         <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <h3 class="text-xl leading-6 font-medium text-gray-900">
                 Your Posts
             </h3>
         </div>
