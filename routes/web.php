@@ -20,6 +20,7 @@ Route::get('/', [PagesController::class, 'index']);
 
 Route::get('/user-dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 Route::resource('/blog', PostsController::class);
+Route::get('/about', [PagesController::class, 'about'])->name('about');
 
 Auth::routes();
 

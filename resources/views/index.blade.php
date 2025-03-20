@@ -31,9 +31,17 @@
             <a href="/blog" class="px-8 py-4 border-2 border-blue-500 text-blue-400 bg-transparent rounded-lg text-lg font-medium hover:bg-blue-600 hover:text-white hover:border-blue-600 transition duration-300">
                 Browse Articles
             </a>
+            @auth
+            <!-- User is logged in -->
+            <a href="/user-dashboard" class="px-8 py-4 bg-green-600 text-white rounded-lg text-lg font-medium hover:bg-green-800 transition duration-300 shadow-lg flex items-center">
+                Dashboard
+            </a>
+        @else
+            <!-- User is not logged in -->
             <a href="/register" class="px-8 py-4 bg-blue-600 text-white rounded-lg text-lg font-medium hover:bg-blue-700 transition duration-300 shadow-lg">
                 Join Us
             </a>
+        @endauth
         </div>
     </div>
     
@@ -75,9 +83,6 @@
                             {{ \Str::limit($post->description, 120) }}
                         </p>
                         <div class="mt-6 flex items-center">
-                            <div class="flex-shrink-0">
-                                <span class="text-sm font-medium text-gray-700">By {{ $post->user->name }}</span>
-                            </div>
                             <div class="ml-auto">
                                 <a href="/blog/{{ $post->slug }}" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
                                     Read More
