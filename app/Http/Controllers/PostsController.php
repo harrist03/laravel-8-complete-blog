@@ -18,10 +18,35 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('blog.index')
-            ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
+        $query = Post::with('user'); // Eager load users
+        
+        // Apply sorting based on request
+        switch ($request->sort) {
+            case 'oldest':
+                $query->oldest('created_at');
+                break;
+                
+            case 'most_viewed':
+                $query->orderBy('views', 'desc');
+                break;
+                
+            case 'most_liked':
+                $query->orderBy('likes', 'desc');
+                break;
+                
+            case 'latest':
+            default:
+                $query->latest('created_at');
+                break;
+        }
+        
+        $posts = $query->paginate(9); // Show 9 posts per page for a 3x3 grid
+        
+        return view('blog.index', [
+            'posts' => $posts
+        ]);
     }
 
     /**

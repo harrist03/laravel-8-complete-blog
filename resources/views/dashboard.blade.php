@@ -93,16 +93,66 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center items-center bg-white overflow-hidden shadow rounded-lg p-5">
-            <a href="/blog/create"
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
-                Create New Post
-            </a>
-        </div>
     </div>
+
+    <div class="flex justify-left items-center">
+        <a href="/blog/create"
+            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            Create New Post
+        </a>
+    </div>
+
+    <!-- Top Performing Posts -->
+<div class="bg-white shadow overflow-hidden sm:rounded-md mt-8">
+    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+        <h3 class="text-xl font-medium text-gray-900">Top Performing Posts</h3>
+    </div>
+    <div class="px-4 py-3">
+        <ul class="divide-y divide-gray-200">
+            @forelse($posts->sortByDesc('views')->take(3) as $post)
+                <li class="py-3">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-shrink-0">
+                            @if ($loop->iteration == 1)
+                                <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-yellow-300">
+                                    <span class="text-xs font-medium text-white">{{ $loop->iteration }}</span>
+                                </span>
+                            @elseif($loop->iteration == 2)
+                                <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-400">
+                                    <span class="text-xs font-medium text-white">{{ $loop->iteration }}</span>
+                                </span>
+                            @else
+                                <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-yellow-700">
+                                    <span class="text-xs font-medium text-white">{{ $loop->iteration }}</span>
+                                </span>
+                            @endif
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-sm font-medium text-gray-900 truncate">
+                                {{ $post->title }}
+                            </p>
+                            <p class="text-sm text-gray-500">
+                                {{ $post->views }} views • {{ $post->likes }} likes
+                            </p>
+                        </div>
+                        <div>
+                            <a href="/blog/{{ $post->slug }}" class="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50">
+                                View
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            @empty
+                <li class="py-4 text-center">
+                    <p class="text-sm text-gray-500">No posts available</p>
+                </li>
+            @endforelse
+        </ul>
+    </div>
+</div>
     
     <!-- Posts List -->
     <div class="bg-white shadow overflow-hidden sm:rounded-md mt-8">
