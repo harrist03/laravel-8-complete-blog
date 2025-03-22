@@ -8,7 +8,12 @@ class PagesController extends Controller
 {
     public function index()
     {
-        return view('index');
+        // Get the most liked post
+        $featuredPost = \App\Models\Post::withCount('likes')
+        ->orderBy('likes_count', 'desc')
+        ->first();
+
+        return view('index', compact('featuredPost'));
     }
 
     public function about()

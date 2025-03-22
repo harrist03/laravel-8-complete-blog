@@ -19,7 +19,7 @@
 </head>
 <body class="bg-gray-100 min-h-screen antialiased leading-none font-sans">
     <div id="app">
-        <header class="bg-black shadow-md sticky top-0 z-50">
+        <header class="bg-gray-900 border-b border-blue-500 shadow-md sticky top-0 z-50">
             <div class="container mx-auto">
                 <div class="flex justify-between items-center py-4 px-6 lg:px-8">
                     <!-- Logo Area -->

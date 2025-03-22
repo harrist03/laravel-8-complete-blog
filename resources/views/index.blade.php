@@ -155,6 +155,12 @@
     </div>
 </div>
 
+<div class="bg-gray-900">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" class="w-full h-auto -mb-1">
+        <path fill="#ffffff" fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,42.7C1120,32,1280,32,1360,32L1440,32L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+    </svg>
+</div>
+
 <!-- Newsletter Section -->
 <div class="bg-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -185,6 +191,13 @@
         </div>
     </div>
 </div>
+
+<div class="bg-white">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" class="w-full h-auto -mb-1">
+        <path fill="#F3F4F6" fill-opacity="1" d="M0,0L80,5.3C160,11,320,21,480,37.3C640,53,800,75,960,74.7C1120,75,1280,53,1360,42.7L1440,32L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+    </svg>
+</div>
+
 
 <!-- Popular Categories Section -->
 <div class="bg-gray-100 py-16">
@@ -253,32 +266,79 @@
 </div>
 
 <!-- Featured Article Section -->
-<div class="bg-black py-16">
+<div class="bg-gray-900 py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:flex lg:items-center lg:space-x-8">
-            <div class="lg:w-1/2">
-                <span class="text-blue-400 font-semibold">FEATURED ARTICLE</span>
-                <h2 class="mt-2 text-3xl font-extrabold text-white">
-                    Understanding Odds: A Beginner's Guide to Sports Betting
-                </h2>
-                <div class="w-16 h-1 bg-blue-500 my-4"></div>
-                <p class="mt-4 text-gray-300 text-lg">
-                    Navigating the complex world of sports betting starts with understanding how odds work. Our comprehensive guide breaks down different formats, calculations, and what they mean for your potential returns.
-                </p>
-                <div class="mt-8">
-                    <a href="/blog/understanding-odds" class="px-6 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition duration-300">
-                        Read Full Article
-                    </a>
+            @if($featuredPost)
+                <div class="lg:w-1/2">
+                    <span class="text-blue-400 font-semibold">MOST POPULAR ARTICLE</span>
+                    <h2 class="mt-2 text-3xl font-extrabold text-white">
+                        {{ $featuredPost->title }}
+                    </h2>
+                    <div class="w-16 h-1 bg-blue-500 my-4"></div>
+                    <div class="mt-2 flex items-center text-sm">
+                        <span class="text-gray-300">
+                            By <span class="font-medium text-white">{{ $featuredPost->user->name }}</span>
+                        </span>
+                        <span class="mx-2 text-gray-500">•</span>
+                        <span class="text-gray-300">{{ $featuredPost->created_at->format('M d, Y') }}</span>
+                        <span class="mx-2 text-gray-500">•</span>
+                        <span class="flex items-center text-red-400">
+                            <svg class="h-4 w-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                            </svg>
+                            {{ $featuredPost->likes_count }} likes
+                        </span>
+                    </div>
+                    <p class="mt-4 text-gray-300 text-lg">
+                        {{ \Str::limit($featuredPost->description, 150) }}
+                    </p>
+                    <div class="mt-8">
+                        <a href="/blog/{{ $featuredPost->slug }}" class="px-6 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition duration-300">
+                            Read Full Article
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="mt-10 lg:mt-0 lg:w-1/2">
-                <div class="relative rounded-lg overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80" alt="Featured Article" class="w-full h-auto">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div class="mt-10 lg:mt-0 lg:w-1/2">
+                    <div class="relative rounded-lg overflow-hidden">
+                        @if($featuredPost->image_path)
+                            <img src="{{ asset('images/' . $featuredPost->image_path) }}" alt="{{ $featuredPost->title }}" class="w-full h-auto object-cover aspect-video">
+                        @else
+                            <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80" alt="Featured Article" class="w-full h-auto">
+                        @endif
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                            <svg class="h-4 w-4 mr-1" fill="white" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                            </svg>
+                            Most Liked
+                        </div>
+                    </div>
                 </div>
-            </div>
+            @else
+                <div class="w-full text-center py-12">
+                    <span class="text-blue-400 font-semibold">FEATURED CONTENT</span>
+                    <h2 class="mt-2 text-3xl font-extrabold text-white">
+                        Start Exploring Our Articles
+                    </h2>
+                    <div class="w-16 h-1 bg-blue-500 my-4 mx-auto"></div>
+                    <p class="mt-4 text-gray-300 text-lg max-w-2xl mx-auto">
+                        Discover expert insights on sports betting, casino games, and responsible gambling practices.
+                    </p>
+                    <div class="mt-8">
+                        <a href="/blog" class="px-6 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition duration-300">
+                            Browse Articles
+                        </a>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
+</div>
+<div class="bg-gray-900 relative overflow-hidden">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none" class="w-full" style="display:block; height:50px;">
+        <path fill="#ffffff" fill-opacity="1" d="M0,50L80,55C160,60,320,70,480,66.7C640,63,800,47,960,45.7C1120,45,1280,58,1360,64.7L1440,70L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z"></path>
+    </svg>
 </div>
 
 @endsection
