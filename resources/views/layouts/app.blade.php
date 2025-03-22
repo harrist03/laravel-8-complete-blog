@@ -19,7 +19,7 @@
 </head>
 <body class="bg-gray-100 min-h-screen antialiased leading-none font-sans">
     <div id="app">
-        <header class="bg-black shadow-md">
+        <header class="bg-black shadow-md sticky top-0 z-50">
             <div class="container mx-auto">
                 <div class="flex justify-between items-center py-4 px-6 lg:px-8">
                     <!-- Logo Area -->
@@ -41,7 +41,7 @@
                     </div>
 
                     <!-- Desktop Navigation -->
-                    <nav class="hidden md:flex items-center space-x-8 text-gray-300 h-8">
+                    <nav class="sticky top-0 z-50 hidden md:flex items-center space-x-8 text-gray-300 h-8">
                         <a href="/" class="text-gray-300 hover:text-blue-400 hover:underline ">Home</a>
                         <a href="/blog" class="text-gray-300 hover:text-blue-400 hover:underline ">Articles</a>
                         <a href="/about" class="text-gray-300 hover:text-blue-400 hover:underline ">About</a>

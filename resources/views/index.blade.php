@@ -20,7 +20,7 @@
     <!-- Dark overlay with blue accent -->
     <div class="absolute inset-0 bg-gradient-to-br from-blue-900/85 to-black/70 z-0"></div>
     
-    <div class="relative z-10 max-w-7xl mx-auto px-4 py-48 sm:py-56 lg:py-64 sm:px-6 lg:px-8 text-center flex flex-col h-full justify-center">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 py-48 sm:py-60 lg:py-60 sm:px-6 lg:px-8 text-center flex flex-col h-full justify-center">
         <h1 class="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white mb-8 animate-fadeIn">
             <span class="block">The Daily Wager</span>
         </h1>
@@ -167,20 +167,21 @@
                     Join our newsletter and receive expert betting tips, exclusive offers, and industry insights every week.
                 </p>
             </div>
-            <form class="mt-8 sm:flex justify-center">
-                <div class="min-w-0 flex-1">
-                    <label for="email" class="sr-only">Email address</label>
-                    <input id="email" type="email" placeholder="Enter your email" class="block w-full px-4 py-3 rounded-md border-0 text-base text-gray-900 placeholder-gray-500">
-                </div>
-                <div class="mt-3 sm:mt-0 sm:ml-3">
-                    <button type="submit" class="block w-full px-4 py-3 rounded-md shadow bg-black text-white font-medium hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                        Subscribe
-                    </button>
-                </div>
-            </form>
-            <p class="mt-3 text-sm text-blue-100 text-center">
-                We respect your privacy. Unsubscribe at any time.
-            </p>
+            @if(session('newsletter_success'))
+            <div class="bg-blue-800 text-blue-100 p-4 rounded-md mb-6 max-w-md mx-auto">
+                <p>{{ session('newsletter_success') }}</p>
+            </div>
+        @endif
+        <form action="{{ route('newsletter.subscribe') }}" method="POST" class="mt-8 flex max-w-md mx-auto">
+            @csrf
+            <input type="email" name="email" placeholder="Your email address" class="px-4 py-3 rounded-md flex-grow focus:outline-none focus:ring-2 focus:ring-blue-500 mr-4" required>
+            <button type="submit" class="bg-white text-blue-700 font-medium px-6 py-3 rounded-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-700 transition duration-150 ease-in-out">
+                Subscribe
+            </button>
+        </form>
+        @error('email')
+            <p class="text-red-300 text-sm mt-2 max-w-md mx-auto">{{ $message }}</p>
+        @enderror
         </div>
     </div>
 </div>

@@ -127,21 +127,41 @@ class PostsController extends Controller
      * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $slug)
     {
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5048'
         ]);
-
-        Post::where('slug', $slug)
-            ->update([
-                'title' => $request->input('title'),
-                'description' => $request->input('description'),
-                'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
-                'user_id' => auth()->user()->id
-            ]);
-
+    
+        $post = Post::where('slug', $slug)->first();
+        
+        // Handle image upload if there's a new image
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($post->image_path && file_exists(public_path('images/' . $post->image_path))) {
+                unlink(public_path('images/' . $post->image_path));
+            }
+            
+            // Generate a unique image name
+            $newImageName = uniqid() . '-' . $request->title . '.' . 
+                $request->image->extension();
+                
+            // Save the image
+            $request->image->move(public_path('images'), $newImageName);
+            
+            // Update post with new image path
+            $post->image_path = $newImageName;  
+        }
+        
+        // Update other fields
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
+        
+        $post->save();
+        
         return redirect('/blog')
             ->with('message', 'Your post has been updated!');
     }
@@ -157,7 +177,7 @@ class PostsController extends Controller
         $post = Post::where('slug', $slug);
         $post->delete();
 
-        return redirect('/blog')
+        return redirect('/user-dashboard')
             ->with('message', 'Your post has been deleted!');
     }
 
