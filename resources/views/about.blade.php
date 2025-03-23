@@ -97,9 +97,11 @@
                 Whether you're here to learn, share your expertise, or simply explore new ideas, we welcome you to our growing community of curious minds.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/register" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
-                    Create an Account
-                </a>
+                @guest
+                    <a href="/register" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+                        Create an Account
+                    </a>
+                @endguest
                 <a href="/blog" class="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
                     Explore Articles
                 </a>
