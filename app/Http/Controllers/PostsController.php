@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostsController extends Controller
@@ -20,10 +21,10 @@ class PostsController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Post::with('user'); // Eager load users
+        $query = Post::with(['user', 'category']);
 
-        if ($request->has('category') && $request->category) {
-            $query->where('category', $request->category);
+        if ($request->has('category_id') && $request->category_id) {
+            $query->where('category_id', $request->category_id);
         }
         
         // Apply sorting based on request
@@ -46,11 +47,11 @@ class PostsController extends Controller
                 break;
         }
         
-        $posts = $query->paginate(9); // Show 9 posts per page for a 3x3 grid
+        $posts = $query->paginate(9);
+        // Get all categories for the filter dropdown
+        $categories = Category::orderBy('name')->get();
         
-        return view('blog.index', [
-            'posts' => $posts
-        ]);
+        return view('blog.index', compact('posts', 'categories'));
     }
 
     /**
@@ -60,7 +61,8 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        $categories = Category::orderBy('name')->get();
+        return view('blog.create')->with('categories', $categories);
     }
 
     /**
@@ -75,7 +77,7 @@ class PostsController extends Controller
             'title' => 'required',
             'description' => 'required',
             'image' => 'required|mimes:jpg,png,jpeg|max:5048',
-            'category' => 'nullable|string'
+            'category_id' => 'nullable|exists:categories,id'
         ]);
 
         $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
@@ -88,7 +90,7 @@ class PostsController extends Controller
             'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
             'image_path' => $newImageName,
             'user_id' => auth()->user()->id,
-            'category' => $request->input('category')
+            'category_id' => $request->input('category_id')
         ]);
 
         return redirect('/blog')
@@ -143,7 +145,7 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'category' => 'required',
+            'category_id' => 'nullable|exists:categories,id',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:5048'
         ]);
     
@@ -170,7 +172,7 @@ class PostsController extends Controller
         // Update other fields
         $post->title = $request->input('title');
         $post->description = $request->input('description');
-        $post->category = $request->input('category');
+        $post->category_id = $request->input('category_id');
         
         $post->save();
         

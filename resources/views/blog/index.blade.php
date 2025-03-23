@@ -45,17 +45,18 @@
             </div>
             
             <div>
-                <label for="category" class="sr-only">Filter by category</label>
-                <select name="category" id="category" onchange="this.form.submit()" class="bg-white border border-gray-300 rounded-md px-4 py-2">
+                <label for="category_id" class="sr-only">Filter by category</label>
+                <select name="category_id" id="category_id" onchange="this.form.submit()" class="bg-white border border-gray-300 rounded-md px-4 py-2">
                     <option value="">All Categories</option>
-                    <option value="betting-strategies" {{ request('category') == 'betting-strategies' ? 'selected' : '' }}>Betting Strategies</option>
-                    <option value="responsible-gambling" {{ request('category') == 'responsible-gambling' ? 'selected' : '' }}>Responsible Gambling</option>
-                    <option value="sports-analysis" {{ request('category') == 'sports-analysis' ? 'selected' : '' }}>Sports Analysis</option>
-                    <option value="casino-games" {{ request('category') == 'casino-games' ? 'selected' : '' }}>Casino Games</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
             
-            @if(request('category') || request('sort') != 'latest')
+            @if(request('category_id') || request('sort') != 'latest')
             <a href="{{ route('blog.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-blue-600 bg-white hover:bg-blue-50 transition-colors">
                 <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
