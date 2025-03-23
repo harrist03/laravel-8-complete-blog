@@ -49,6 +49,22 @@
                     <p class="mt-1 text-sm text-gray-500">Make it clear and engaging to attract readers.</p>
                 </div>
 
+                <!-- Category Selection -->
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select 
+                        name="category" 
+                        id="category" 
+                        class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-lg py-3 px-4">
+                        <option value="">Select a category</option>
+                        <option value="betting-strategies" {{ $post->category == 'betting-strategies' ? 'selected' : '' }}>Betting Strategies</option>
+                        <option value="responsible-gambling" {{ $post->category == 'responsible-gambling' ? 'selected' : '' }}>Responsible Gambling</option>
+                        <option value="sports-analysis" {{ $post->category == 'sports-analysis' ? 'selected' : '' }}>Sports Analysis</option>
+                        <option value="casino-games" {{ $post->category == 'casino-games' ? 'selected' : '' }}>Casino Games</option>
+                    </select>
+                    <p class="mt-1 text-sm text-gray-500">Categorizing your article helps readers find relevant content.</p>
+                </div>
+
                 <!-- Image Upload -->
                 <div>
                     <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Featured Image</label>
