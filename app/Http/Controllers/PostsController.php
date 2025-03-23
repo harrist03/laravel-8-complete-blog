@@ -21,6 +21,10 @@ class PostsController extends Controller
     public function index(Request $request)
     {
         $query = Post::with('user'); // Eager load users
+
+        if ($request->has('category') && $request->category) {
+            $query->where('category', $request->category);
+        }
         
         // Apply sorting based on request
         switch ($request->sort) {
@@ -35,7 +39,7 @@ class PostsController extends Controller
             case 'most_liked':
                 $query->orderBy('likes', 'desc');
                 break;
-                
+
             case 'latest':
             default:
                 $query->latest('created_at');
@@ -70,7 +74,8 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'image' => 'required|mimes:jpg,png,jpeg|max:5048'
+            'image' => 'required|mimes:jpg,png,jpeg|max:5048',
+            'category' => 'nullable|string'
         ]);
 
         $newImageName = uniqid() . '-' . $request->title . '.' . $request->image->extension();
@@ -82,7 +87,8 @@ class PostsController extends Controller
             'description' => $request->input('description'),
             'slug' => SlugService::createSlug(Post::class, 'slug', $request->title),
             'image_path' => $newImageName,
-            'user_id' => auth()->user()->id
+            'user_id' => auth()->user()->id,
+            'category' => $request->input('category')
         ]);
 
         return redirect('/blog')
@@ -133,6 +139,7 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'category' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:5048'
         ]);
     
@@ -159,6 +166,7 @@ class PostsController extends Controller
         // Update other fields
         $post->title = $request->input('title');
         $post->description = $request->input('description');
+        $post->category = $request->input('category');
         
         $post->save();
         
