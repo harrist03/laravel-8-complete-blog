@@ -5,6 +5,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,8 @@ Route::get('/', [PagesController::class, 'index']);
 Route::get('/user-dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 Route::resource('/blog', PostsController::class);
 Route::get('/about', [PagesController::class, 'about'])->name('about');
-Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 
