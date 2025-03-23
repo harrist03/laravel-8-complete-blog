@@ -122,8 +122,12 @@ class PostsController extends Controller
      */
     public function edit($slug)
     {
+        $post = Post::where('slug', $slug)->first();
+        $categories = Category::orderBy('name')->get();
+        
         return view('blog.edit')
-            ->with('post', Post::where('slug', $slug)->first());
+            ->with('post', $post)
+            ->with('categories', $categories);
     }
 
     /**

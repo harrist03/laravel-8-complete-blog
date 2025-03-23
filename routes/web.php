@@ -33,5 +33,5 @@ Auth::routes();
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('/blog/{slug}/like', [App\Http\Controllers\PostsController::class, 'like'])->name('blog.like');
-
+Route::get('blog/category/{slug}', [CategoryController::class, 'posts'])->name('category.posts');
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
