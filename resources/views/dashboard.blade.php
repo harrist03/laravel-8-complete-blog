@@ -106,7 +106,7 @@
     </div>
 
     <!-- Top Performing Posts -->
-<div class="bg-white shadow overflow-hidden sm:rounded-md mt-8">
+<div class="bg-white shadow overflow-hidden sm:rounded-md mt-8 mb-4">
     <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
         <h3 class="text-xl font-medium text-gray-900">Top Performing Posts</h3>
     </div>
@@ -153,6 +153,33 @@
         </ul>
     </div>
 </div>
+<!-- Notification Message -->
+@if (session()->has('message'))
+    <div class="my-8 flex justify-center">
+        <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-md max-w-lg" role="alert">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm font-medium">{{ session()->get('message') }}</p>
+                </div>
+                <div class="ml-auto pl-3">
+                    <div class="-mx-1.5 -my-1.5">
+                        <button onclick="this.parentElement.parentElement.parentElement.parentElement.parentElement.remove()" class="inline-flex rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            <span class="sr-only">Dismiss</span>
+                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
     
     <!-- Posts List -->
     <div class="bg-white shadow overflow-hidden sm:rounded-md mt-8">
