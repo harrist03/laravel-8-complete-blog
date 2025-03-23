@@ -51,6 +51,8 @@ A user dashboard that allows the user to manage posts (create, edit and delete).
 View all your posts and analytics such as total posts, total views and total likes
 See the top performing posts
 
+![User Dashboard](./public/images/Screenshot%202025-03-23%20153644.png/)
+
 A newsletter email system, which sends an email to the email-address you entered
 powered By MailGun
 
