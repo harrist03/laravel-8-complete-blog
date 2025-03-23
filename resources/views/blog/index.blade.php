@@ -30,44 +30,41 @@
         </div>
     @endif
 
-    <!-- Filtering Options -->
-    <!-- Simplified Filtering Options -->
+<!-- Filtering Options -->
 <div class="bg-white shadow rounded-lg p-4 mb-8">
-    <div class="flex justify-left items-center flex-wrap gap-2">
-        <a href="{{ (request('sort') == 'latest') ? request()->url() : request()->url() . '?sort=latest' }}" 
-           class="inline-flex items-center px-3 py-2 border shadow-sm text-sm leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200
-                  {{ request('sort') == 'latest' ? 'bg-blue-50 text-blue-700 border-blue-300' : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50' }}">
-            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Latest
-        </a>
-        <a href="{{ (request('sort') == 'oldest') ? request()->url() : request()->url() . '?sort=oldest' }}" 
-           class="inline-flex items-center px-3 py-2 border shadow-sm text-sm leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200
-                  {{ request('sort') == 'oldest' ? 'bg-blue-50 text-blue-700 border-blue-300' : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50' }}">
-            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            Oldest
-        </a>
-        <a href="{{ (request('sort') == 'most_viewed') ? request()->url() : request()->url() . '?sort=most_viewed' }}" 
-           class="inline-flex items-center px-3 py-2 border shadow-sm text-sm leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200
-                  {{ request('sort') == 'most_viewed' ? 'bg-blue-50 text-blue-700 border-blue-300' : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50' }}">
-            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-            </svg>
-            Most Viewed
-        </a>
-        <a href="{{ (request('sort') == 'most_liked') ? request()->url() : request()->url() . '?sort=most_liked' }}" 
-           class="inline-flex items-center px-3 py-2 border shadow-sm text-sm leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200
-                  {{ request('sort') == 'most_liked' ? 'bg-blue-50 text-blue-700 border-blue-300' : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50' }}">
-            <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-            Most Liked
-        </a>
-    </div>
+    <form action="{{ route('blog.index') }}" method="GET" class="flex flex-wrap gap-4">
+        <div class="flex flex-wrap items-center gap-4">
+            <div>
+                <label for="sort" class="sr-only">Sort by</label>
+                <select name="sort" id="sort" onchange="this.form.submit()" class="bg-white border border-gray-300 rounded-md px-4 py-2">
+                    <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Latest</option>
+                    <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest</option>
+                    <option value="most_viewed" {{ request('sort') == 'most_viewed' ? 'selected' : '' }}>Most Viewed</option>
+                    <option value="most_liked" {{ request('sort') == 'most_liked' ? 'selected' : '' }}>Most Liked</option>
+                </select>
+            </div>
+            
+            <div>
+                <label for="category" class="sr-only">Filter by category</label>
+                <select name="category" id="category" onchange="this.form.submit()" class="bg-white border border-gray-300 rounded-md px-4 py-2">
+                    <option value="">All Categories</option>
+                    <option value="betting-strategies" {{ request('category') == 'betting-strategies' ? 'selected' : '' }}>Betting Strategies</option>
+                    <option value="responsible-gambling" {{ request('category') == 'responsible-gambling' ? 'selected' : '' }}>Responsible Gambling</option>
+                    <option value="sports-analysis" {{ request('category') == 'sports-analysis' ? 'selected' : '' }}>Sports Analysis</option>
+                    <option value="casino-games" {{ request('category') == 'casino-games' ? 'selected' : '' }}>Casino Games</option>
+                </select>
+            </div>
+            
+            @if(request('category') || request('sort') != 'latest')
+            <a href="{{ route('blog.index') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md text-blue-600 bg-white hover:bg-blue-50 transition-colors">
+                <svg class="h-4 w-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Clear filters
+            </a>
+            @endif
+        </div>
+    </form>
 </div>
 
     <!-- Blog Posts Grid -->
