@@ -1,6 +1,4 @@
-## Laravel 8 Complete Blog
-
-This repository is linked to [this youtube video](https://www.youtube.com/watch?v=HKJDLXsTr8A&t=4710s) where I show you how to create a complete blog in Laravel 8 using best practices.
+## Laravel Gambling Theme Blog
 
 •	Author: Harris Teh Kai Ze <br>
 
@@ -11,7 +9,7 @@ This repository is linked to [this youtube video](https://www.youtube.com/watch?
 ## Usage <br>
 Setting up your development environment on your local machine: <br>
 ```
-git clone git@github.com:codewithdary/laravel-8-complete-blog.git
+git clone https://github.com/harrist03/laravel-8-complete-blog.git
 cd laravel-8-complete-blog
 cp .env.example .env
 composer install
@@ -43,5 +41,18 @@ Migrate the tables
 php artisan migrate
 ```
 
-## Contributing
-Do not hesitate to contribute to the project by adapting or adding features ! Bug reports or pull requests are welcome.
+Migrate the seeders (get the test data)
+```
+php artisan migrate:fresh --seed
+```
+
+## Unqiue Features
+A user dashboard that allows the user to manage posts (create, edit and delete).
+View all your posts and analytics such as total posts, total views and total likes
+See the top performing posts
+
+A newsletter email system, which sends an email to the email-address you entered
+powered By MailGun
+
+You can also filter by most liked, most viewed, latest and oldest
+You can also filter by categories (sports, strategies, etc.)
