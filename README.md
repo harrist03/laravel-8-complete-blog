@@ -46,6 +46,11 @@ Migrate the seeders (get the test data)
 php artisan migrate:fresh --seed
 ```
 
+## Images
+This repository includes essential sample post images in the `/public/images` directory.
+These images are included for demonstration purposes and will be available after cloning.
+If images failed to be downloaded, placeholder images are used instead.
+
 ## Unqiue Features
 A user dashboard that allows the user to manage posts (create, edit and delete).
 View all your posts and analytics such as total posts, total views and total likes
@@ -58,3 +63,5 @@ powered By MailGun
 
 You can also filter by most liked, most viewed, latest and oldest
 You can also filter by categories (sports, strategies, etc.)
+
+![Filters](./public/images/Screenshot%202025-03-23%20154102.png)
