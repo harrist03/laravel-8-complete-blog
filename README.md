@@ -61,6 +61,8 @@ See the top performing posts
 A newsletter email system, which sends an email to the email-address you entered
 powered By MailGun
 
+![Newsletter Email](./public/images/Screenshot%202025-03-23%20154310.png)
+
 You can also filter by most liked, most viewed, latest and oldest
 You can also filter by categories (sports, strategies, etc.)
 
